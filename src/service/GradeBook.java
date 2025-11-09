@@ -24,30 +24,34 @@ public class GradeBook {
     }
 
     public double getAverageGradePerStudent(Student student) {
-        double averageGrade = 0;
+        double result = 0;
         for (Student st : students) {
             if (st.equals(student)) {
-                for (Map.Entry<Subject, List<Integer>> entry : student.getGrades().entrySet()) {
-                    for (int i : entry.getValue()) {
-                        averageGrade += i;
+                for (List<Integer> subjects : st.getGrades().values()) {
+                    double sum = 0;
+                    for (int grade : subjects) {
+                        sum += grade;
                     }
+                    result += sum / subjects.size();
                 }
+                result = result / st.getGrades().size();
                 break;
             }
         }
-        return averageGrade;
-
-//        for (List<Integer> list : student.getGrades().values())
+        return result ;
     }
 
     public double getAverageGradeSubject(Student student, Subject subject) {
-        double averageGrade = 0;
+        double result = 0;
         for (Student st : students) {
             if (st.equals(student)) {
-
+                for (int grade : st.getGrades().get(subject)) {
+                    result += grade;
+                }
+                result /= st.getGrades().get(subject).size();
+                break;
             }
         }
-
-        return averageGrade;
+        return result;
     }
 }
